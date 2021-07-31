@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23000000%22></rect><path fill=%22%23fff%22 d=%22M56.72 65.03L43.36 65.03L44.64 61.87L55.45 61.87L56.72 65.03ZM59.27 71.36L40.90 71.36L42.13 68.19L57.91 68.19L59.27 71.36ZM61.73 77.69L38.44 77.69L39.67 74.52L60.42 74.52L61.73 77.69ZM39.80 17.88L12.73 86.39L9.31 86.39L38.09 13.61L41.52 13.61L70.26 86.39L66.88 86.39L39.80 17.88ZM16.12 86.39L40.20 25.39L42.00 29.43L19.50 86.39L16.12 86.39ZM22.93 86.39L43.72 33.74L45.39 38.09L26.36 86.39L22.93 86.39ZM29.74 86.39L47.06 42.44L48.73 46.88L33.13 86.39L29.74 86.39ZM61.91 13.61L90.69 86.39L87.27 86.39L58.53 13.61L61.91 13.61ZM51.71 13.61L55.10 13.61L83.88 86.39L80.50 86.39L51.71 13.61ZM44.90 13.61L48.29 13.61L77.07 86.39L73.64 86.39L44.90 13.61Z%22></path></svg>" />
-  <meta name="description" content="{{ page.description | default: site.description }}" />
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <script src="js/d3.min.js"></script>
@@ -17,14 +16,16 @@
 <body>
   <div class="container my-5">
     <div>
-      <h2>Car prices</h2>
-      <p>Sed massa turpis, viverra at vestibulum eget, hendrerit tristique sapien. Proin justo leo, feugiat vitae
-        rhoncus malesuada, scelerisque sed nisi. In hac habitasse platea dictumst. Nam erat massa, viverra ut
-        nisi sed, accumsan laoreet justo. Pellentesque id metus et orci facilisis commodo eu a purus. Maecenas
-        euismod risus molestie tristique semper. Nullam congue mauris nibh, non volutpat lacus consequat
-        sagittis. Curabitur dignissim mi neque, quis tempus arcu consequat ac. Nam tincidunt lacus sed lacus
-        vestibulum, eu aliquet nisl tempus. Curabitur malesuada, ante ut congue vestibulum, turpis nisi eleifend
-        libero, sed finibus metus quam nec arcu. Praesent condimentum tellus non elementum efficitur.
+      <h2>How do vehicle characteristics influence sale price?</h2>
+      <p>
+        This data visualization attempts to chart the relationship between difference vehicle characteristics and the
+        sale price of the vehicle.
+      </p>
+      <p>
+        The charts are grouped by characteristic types, including types related to MPG, types
+        related to the physical dimensions of the vehicle, and types related to engine specification. The visualization
+        also allows for color-coding of the charts by certain non-numeric vehicle characteristic, including fuel type,
+        engine aspiration, door count, body style, and engine location.
       </p>
     </div>
     <hr class="my-4">
@@ -46,7 +47,13 @@
             <option selected value="fuelType">Fuel type</option>
             <option value="aspiration">Aspiration</option>
             <option value="doorNumber">Door number</option>
+            <option value="engineLocation">Engine location</option>
+            <option value="bodyStyle">Body style</option>
           </select>
+        </div>
+        <div class="d-flex flex-column justify-content-start mt-3" id="selectPills">
+          <div><span class="badge rounded-pill text-dark" style="background-color: #ffc107;">Gas</span></div>
+          <div><span class="badge rounded-pill" style="background-color: #a56eff;">Diesel</span></div>
         </div>
       </div>
       <div class="col-10 mt-5">

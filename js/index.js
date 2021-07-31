@@ -1,22 +1,33 @@
+colorOne = "#ffc107";
+colorTwo = "#a56eff";
+colorThree = "#fa4d56";
+colorFour = "#3ddbd9";
+colorFive = "#012749";
+
 
 const fuelTypeColor = d3.scaleOrdinal()
     .domain(["gas", "diesel"])
-    .range(["#FFC107", "#7952B3"])
+    .range([colorOne, colorTwo])
 const aspirationColor = d3.scaleOrdinal()
     .domain(["std", "turbo"])
-    .range(["#FFC107", "#7952B3"])
+    .range([colorOne, colorTwo])
 const doorNumberColor = d3.scaleOrdinal()
     .domain(["two", "four"])
-    .range(["#FFC107", "#7952B3"])
+    .range([colorOne, colorTwo])
 const carBodyColor = d3.scaleOrdinal()
     .domain(["convertible", "hatchback", "sedan", "wagon", "hardtop"])
-    .range(["#440154ff", "#21908dff", "#1c7ccd", "#d8728b", "#570c0f"])
+    .range([colorOne, colorTwo, colorThree, colorFour, colorFive])
+const engineLocationColor = d3.scaleOrdinal()
+    .domain(["front", "rear"])
+    .range([colorOne, colorTwo])
 
 // Value is an array of: [color scale function, column in the dataset]
 colorMap = {
     'fuelType': [fuelTypeColor, 'fueltype'],
     'aspiration': [aspirationColor, 'aspiration'],
-    'doorNumber': [doorNumberColor, 'doornumber']
+    'doorNumber': [doorNumberColor, 'doornumber'],
+    'bodyStyle': [carBodyColor, 'carbody'],
+    'engineLocation': [engineLocationColor, 'enginelocation'],
 }
 
 function writeMpgCharts(data) {
@@ -63,7 +74,44 @@ d3.csv("data/car_prices.csv").then(function (data) {
 
     // Event listener for color
     document.getElementById('colorSelect').addEventListener('change', function () {
-        console.log('test');
+        switch (this.value) {
+            case 'fuelType':
+                document.getElementById('selectPills').innerHTML = `
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorOne};">Gas</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorTwo};">Diesel</span></div>
+                `;
+                break;
+            case 'aspiration':
+                document.getElementById('selectPills').innerHTML = `
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorOne};">Natural</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorTwo};">Turbo</span></div>
+                `;
+                break;
+            case 'doorNumber':
+                document.getElementById('selectPills').innerHTML = `
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorOne};">Two</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorTwo};">Four</span></div>
+                `;
+                break;
+            case 'bodyStyle':
+                document.getElementById('selectPills').innerHTML = `
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorOne};">Convertible</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorTwo};">Hatchback</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorThree};">Sedan</span></div>
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorFour};">Wagon</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorFive};">Hardtop</span></div>
+                `;
+                break;
+            case 'engineLocation':
+                document.getElementById('selectPills').innerHTML = `
+                <div><span class="badge rounded-pill text-dark" style="background-color: ${colorOne};">Front</span></div>
+                <div><span class="badge rounded-pill" style="background-color: ${colorTwo};">Rear</span></div>
+                `;
+                break;
+            default:
+                break;
+        }
+
         writeMpgCharts(data);
         writeDimensionCharts(data);
         writeEngineCharts(data);
