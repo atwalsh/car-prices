@@ -17,7 +17,7 @@
 <body>
   <div class="container my-5">
     <div>
-      <h1>Adam Walsh</h1>
+      <h2>Car prices</h2>
       <p>Sed massa turpis, viverra at vestibulum eget, hendrerit tristique sapien. Proin justo leo, feugiat vitae
         rhoncus malesuada, scelerisque sed nisi. In hac habitasse platea dictumst. Nam erat massa, viverra ut
         nisi sed, accumsan laoreet justo. Pellentesque id metus et orci facilisis commodo eu a purus. Maecenas
@@ -31,7 +31,7 @@
     <!-- <div class="container"> -->
     <div class="row">
       <div class="col-2">
-        <h3 class="mb-3">Car Prices</h3>
+        <h5>Vehicle traits</h5>
         <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item list-group-item-action active" id="mpg" data-bs-toggle="list" href="#list-mpg"
             role="tab" aria-controls="list-mpg">MPG</a>
@@ -39,6 +39,14 @@
             href="#list-dimensions" role="tab" aria-controls="list-dimensions">Dimensions</a>
           <a class="list-group-item list-group-item-action" id="engine" data-bs-toggle="list" href="#list-engine"
             role="tab" aria-controls="list-engine">Engine</a>
+        </div>
+        <div class="mt-5">
+          <h5>Color data by...</h5>
+          <select class="form-select" id="colorSelect">
+            <option selected value="fuelType">Fuel type</option>
+            <option value="aspiration">Aspiration</option>
+            <option value="doorNumber">Door number</option>
+          </select>
         </div>
       </div>
       <div class="col-10 mt-5">
@@ -101,44 +109,33 @@
           <!-- Engine -->
           <div class="tab-pane fade" id="list-engine" role="tabpanel" aria-labelledby="list-engine-list">
             <div class="row">
-              <div class="col-4">
+              <div class="col">
                 <div class="d-flex justify-content-center">
-                  <h4>HP</h4>
+                  <h4>Horsepower</h4>
                 </div>
                 <div id="chart-eng1"></div>
               </div>
-              <div class="col-4">
+              <div class="col">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Compression ratio</h4>
                 </div>
                 <div id="chart-eng2"></div>
               </div>
-              <div class="col-4">
-                <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
-                </div>
-                <div id="chart-eng3"></div>
-              </div>
+
             </div>
             <hr>
             <div class="row">
-              <div class="col-4">
+              <div class="col">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Stroke</h4>
+                </div>
+                <div id="chart-eng3"></div>
+              </div>
+              <div class="col">
+                <div class="d-flex justify-content-center">
+                  <h4>Engine size</h4>
                 </div>
                 <div id="chart-eng4"></div>
-              </div>
-              <div class="col-4">
-                <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
-                </div>
-                <div id="chart-eng5"></div>
-              </div>
-              <div class="col-4">
-                <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
-                </div>
-                <div id="chart-eng6"></div>
               </div>
             </div>
           </div>

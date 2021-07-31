@@ -1,47 +1,77 @@
-// Create our number formatter.
-var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-});
 
-d3.csv("data/car_prices-updated.csv").then(function (data) {
+const fuelTypeColor = d3.scaleOrdinal()
+    .domain(["gas", "diesel"])
+    .range(["#FFC107", "#7952B3"])
+const aspirationColor = d3.scaleOrdinal()
+    .domain(["std", "turbo"])
+    .range(["#FFC107", "#7952B3"])
+const doorNumberColor = d3.scaleOrdinal()
+    .domain(["two", "four"])
+    .range(["#FFC107", "#7952B3"])
+const carBodyColor = d3.scaleOrdinal()
+    .domain(["convertible", "hatchback", "sedan", "wagon", "hardtop"])
+    .range(["#440154ff", "#21908dff", "#1c7ccd", "#d8728b", "#570c0f"])
+
+// Value is an array of: [color scale function, column in the dataset]
+colorMap = {
+    'fuelType': [fuelTypeColor, 'fueltype'],
+    'aspiration': [aspirationColor, 'aspiration'],
+    'doorNumber': [doorNumberColor, 'doornumber']
+}
+
+function writeMpgCharts(data) {
+    document.getElementById("chart-mpg1").innerHTML = "";
+    document.getElementById("chart-mpg2").innerHTML = "";
+    renderMpgChart(data);
+}
+function writeDimensionCharts(data) {
+    document.getElementById("chart-dim1").innerHTML = "";
+    document.getElementById("chart-dim2").innerHTML = "";
+    document.getElementById("chart-dim3").innerHTML = "";
+    document.getElementById("chart-dim4").innerHTML = "";
+    document.getElementById("chart-dim5").innerHTML = "";
+    renderDimensionChart(data);
+}
+function writeEngineCharts(data) {
+    document.getElementById("chart-eng1").innerHTML = "";
+    document.getElementById("chart-eng2").innerHTML = "";
+    document.getElementById("chart-eng3").innerHTML = "";
+    document.getElementById("chart-eng4").innerHTML = "";
+    renderEngineChart(data);
+}
+
+d3.csv("data/car_prices.csv").then(function (data) {
     // Render initial chart
     renderMpgChart(data);
-    // Add event listener for list group
-    const divs = document.querySelectorAll('.list-group-item');
-    divs.forEach(el => el.addEventListener('click', event => {
-        // Clear chart container
-        // document.getElementById("pane").innerHTML = "";
-        // Render chart depending on list group choice
+
+    // Event listener for trait selector
+    document.querySelectorAll('.list-group-item').forEach(el => el.addEventListener('click', event => {
         switch (event.target.getAttribute("id")) {
             case 'mpg':
-                document.getElementById("chart-mpg").innerHTML = "";
-                renderMpgChart(data);
+                writeMpgCharts(data);
                 break;
             case 'dimensions':
-                document.getElementById("chart-dim1").innerHTML = "";
-                document.getElementById("chart-dim2").innerHTML = "";
-                document.getElementById("chart-dim3").innerHTML = "";
-                document.getElementById("chart-dim4").innerHTML = "";
-                document.getElementById("chart-dim5").innerHTML = "";
-                renderDimensionChart(data);
+                writeDimensionCharts(data);
                 break;
             case 'engine':
-                console.log('ENG');
-                document.getElementById("chart-eng1").innerHTML = "";
-                document.getElementById("chart-eng2").innerHTML = "";
-                document.getElementById("chart-eng3").innerHTML = "";
-                document.getElementById("chart-eng4").innerHTML = "";
-                document.getElementById("chart-eng5").innerHTML = "";
-                renderEngineChart(data);
+                writeEngineCharts(data);
                 break;
             default:
                 break;
         }
     }));
+
+    // Event listener for color
+    document.getElementById('colorSelect').addEventListener('change', function () {
+        console.log('test');
+        writeMpgCharts(data);
+        writeDimensionCharts(data);
+        writeEngineCharts(data);
+    });
 })
 
 function renderMpgChart(data) {
+    colorPair = colorMap[document.getElementById("colorSelect").value]
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 500 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -70,7 +100,7 @@ function renderMpgChart(data) {
         .attr("cx", function (d) { return x(d.citympg); })
         .attr("cy", function (d) { return y(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg = d3.select("#chart-mpg2")
         .append("svg")
@@ -96,7 +126,7 @@ function renderMpgChart(data) {
         .attr("cx", function (d) { return x(d.highwaympg); })
         .attr("cy", function (d) { return y(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 }
 
 
@@ -105,6 +135,7 @@ function renderDimensionChart(data) {
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 350 - margin.left - margin.right,
         height = 225 - margin.top - margin.bottom;
+
     svg1 = d3.select("#chart-dim1")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -129,7 +160,7 @@ function renderDimensionChart(data) {
         .attr("cx", function (d) { return x1(d.wheelbase); })
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg2 = d3.select("#chart-dim2")
         .append("svg")
@@ -155,7 +186,7 @@ function renderDimensionChart(data) {
         .attr("cx", function (d) { return x2(d.carlength); })
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg3 = d3.select("#chart-dim3")
         .append("svg")
@@ -181,7 +212,7 @@ function renderDimensionChart(data) {
         .attr("cx", function (d) { return x3(d.carwidth); })
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg4 = d3.select("#chart-dim4")
         .append("svg")
@@ -207,7 +238,7 @@ function renderDimensionChart(data) {
         .attr("cx", function (d) { return x4(d.carheight); })
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg5 = d3.select("#chart-dim5")
         .append("svg")
@@ -233,14 +264,15 @@ function renderDimensionChart(data) {
         .attr("cx", function (d) { return x5(d.curbweight); })
         .attr("cy", function (d) { return y5(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 }
 
 
 function renderEngineChart(data) {
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
-        width = 300 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom;
+        width = 500 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
     svg1 = d3.select("#chart-eng1")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -265,7 +297,7 @@ function renderEngineChart(data) {
         .attr("cx", function (d) { return x1(d.horsepower); })
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg2 = d3.select("#chart-eng2")
         .append("svg")
@@ -291,7 +323,7 @@ function renderEngineChart(data) {
         .attr("cx", function (d) { return x2(d.compressionratio); })
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg3 = d3.select("#chart-eng3")
         .append("svg")
@@ -317,7 +349,7 @@ function renderEngineChart(data) {
         .attr("cx", function (d) { return x3(d.stroke); })
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
     svg4 = d3.select("#chart-eng4")
         .append("svg")
@@ -343,7 +375,7 @@ function renderEngineChart(data) {
         .attr("cx", function (d) { return x4(d.enginesize); })
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
-        .style("fill", "#69b3a2")
+        .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
 
 }
 
