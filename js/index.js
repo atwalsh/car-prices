@@ -43,33 +43,57 @@ d3.csv("data/car_prices-updated.csv").then(function (data) {
 
 function renderMpgChart(data) {
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
-        width = 600 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
-    svg = d3.select("#chart-mpg")
+        width = 500 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    svg = d3.select("#chart-mpg1")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
     x = d3.scaleLinear()
-        .domain([0, 50])
+        .domain([10, 55])
         .range([0, width]);
     svg.append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(x))
-
     y = d3.scaleLinear()
         .domain([0, 50000])
         .range([height, 0]);
     svg.append("g")
         .call(d3.axisLeft(y));
-
     svg.append('g')
         .selectAll("dot")
         .data(data)
         .join("circle")
         .attr("cx", function (d) { return x(d.citympg); })
+        .attr("cy", function (d) { return y(d.price); })
+        .attr("r", 4)
+        .style("fill", "#69b3a2")
+
+    svg = d3.select("#chart-mpg2")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    x = d3.scaleLinear()
+        .domain([10, 55])
+        .range([0, width]);
+    svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(x))
+    y = d3.scaleLinear()
+        .domain([0, 50000])
+        .range([height, 0]);
+    svg.append("g")
+        .call(d3.axisLeft(y));
+    svg.append('g')
+        .selectAll("dot")
+        .data(data)
+        .join("circle")
+        .attr("cx", function (d) { return x(d.highwaympg); })
         .attr("cy", function (d) { return y(d.price); })
         .attr("r", 4)
         .style("fill", "#69b3a2")
@@ -79,8 +103,8 @@ function renderMpgChart(data) {
 
 function renderDimensionChart(data) {
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
-        width = 300 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom;
+        width = 350 - margin.left - margin.right,
+        height = 225 - margin.top - margin.bottom;
     svg1 = d3.select("#chart-dim1")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -250,7 +274,7 @@ function renderEngineChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x2 = d3.scaleLinear()
-        .domain([4000, 7000])
+        .domain([0, 30])
         .range([0, width]);
     svg2.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -264,7 +288,7 @@ function renderEngineChart(data) {
         .selectAll("dot")
         .data(data)
         .join("circle")
-        .attr("cx", function (d) { return x2(d.peakrpm); })
+        .attr("cx", function (d) { return x2(d.compressionratio); })
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", "#69b3a2")
@@ -276,7 +300,7 @@ function renderEngineChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x3 = d3.scaleLinear()
-        .domain([58, 76])
+        .domain([1.5, 4.5])
         .range([0, width]);
     svg3.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -290,7 +314,7 @@ function renderEngineChart(data) {
         .selectAll("dot")
         .data(data)
         .join("circle")
-        .attr("cx", function (d) { return x3(d.carwidth); })
+        .attr("cx", function (d) { return x3(d.stroke); })
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
         .style("fill", "#69b3a2")
@@ -302,7 +326,7 @@ function renderEngineChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x4 = d3.scaleLinear()
-        .domain([45, 62])
+        .domain([0, 400])
         .range([0, width]);
     svg4.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -316,36 +340,11 @@ function renderEngineChart(data) {
         .selectAll("dot")
         .data(data)
         .join("circle")
-        .attr("cx", function (d) { return x4(d.carheight); })
+        .attr("cx", function (d) { return x4(d.enginesize); })
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
         .style("fill", "#69b3a2")
 
-    svg5 = d3.select("#chart-eng5")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
-    x5 = d3.scaleLinear()
-        .domain([1000, 4700])
-        .range([0, width]);
-    svg5.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(x5))
-    y5 = d3.scaleLinear()
-        .domain([0, 50000])
-        .range([height, 0]);
-    svg5.append("g")
-        .call(d3.axisLeft(y5));
-    svg5.append('g')
-        .selectAll("dot")
-        .data(data)
-        .join("circle")
-        .attr("cx", function (d) { return x5(d.curbweight); })
-        .attr("cy", function (d) { return y5(d.price); })
-        .attr("r", 4)
-        .style("fill", "#69b3a2")
 }
 
 // tooltip = d3.select("#chart-mpg")

@@ -29,9 +29,9 @@
     </div>
     <hr class="my-4">
     <!-- <div class="container"> -->
-    <h3 class="mb-3">Car Prices</h3>
     <div class="row">
-      <div class="col-3">
+      <div class="col-2">
+        <h3 class="mb-3">Car Prices</h3>
         <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item list-group-item-action active" id="mpg" data-bs-toggle="list" href="#list-mpg"
             role="tab" aria-controls="list-mpg">MPG</a>
@@ -41,60 +41,60 @@
             role="tab" aria-controls="list-engine">Engine</a>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-10 mt-5">
         <div class="tab-content" id="nav-tabContent">
           <!-- MPG -->
           <div class="tab-pane fade show active" id="list-mpg" role="tabpanel" aria-labelledby="list-mpg-list">
             <div class="row">
               <div class="col">
-                <div id="chart-mpg"></div>
+                <div class="d-flex justify-content-center">
+                  <h4>City MPG</h4>
+                </div>
+                <div id="chart-mpg1"></div>
               </div>
-              <div class="col"></div>
+              <div class="col">
+                <div class="d-flex justify-content-center">
+                  <h4>Highway MPG</h4>
+                </div>
+                <div id="chart-mpg2"></div>
+              </div>
             </div>
           </div>
           <!-- Dimensions -->
           <div class="tab-pane fade" id="list-dimensions" role="tabpanel" aria-labelledby="list-dimensions-list">
             <div class="row">
               <div class="col-4">
-                <div class="d-flex flex-column bd">
-                  <div>
-                    <h4>Wheelbase</h4>
-                  </div>
-                </div>
-                <div id="chart-dim1"></div>
-              </div>
-              <div class="col-4">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Car length</h4>
                 </div>
                 <div id="chart-dim2"></div>
               </div>
               <div class="col-4">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Car width</h4>
                 </div>
                 <div id="chart-dim3"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Car height</h4>
+                </div>
+                <div id="chart-dim4"></div>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-4">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Wheelbase</h4>
                 </div>
-                <div id="chart-dim4"></div>
+                <div id="chart-dim1"></div>
               </div>
               <div class="col-4">
                 <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
+                  <h4>Curb weight</h4>
                 </div>
                 <div id="chart-dim5"></div>
-              </div>
-              <div class="col-4">
-                <div class="d-flex justify-content-center">
-                  <h4>Price / Car height</h4>
-                </div>
-                <div id="chart-dim6"></div>
               </div>
             </div>
           </div>
