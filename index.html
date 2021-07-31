@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23000000%22></rect><path fill=%22%23fff%22 d=%22M56.72 65.03L43.36 65.03L44.64 61.87L55.45 61.87L56.72 65.03ZM59.27 71.36L40.90 71.36L42.13 68.19L57.91 68.19L59.27 71.36ZM61.73 77.69L38.44 77.69L39.67 74.52L60.42 74.52L61.73 77.69ZM39.80 17.88L12.73 86.39L9.31 86.39L38.09 13.61L41.52 13.61L70.26 86.39L66.88 86.39L39.80 17.88ZM16.12 86.39L40.20 25.39L42.00 29.43L19.50 86.39L16.12 86.39ZM22.93 86.39L43.72 33.74L45.39 38.09L26.36 86.39L22.93 86.39ZM29.74 86.39L47.06 42.44L48.73 46.88L33.13 86.39L29.74 86.39ZM61.91 13.61L90.69 86.39L87.27 86.39L58.53 13.61L61.91 13.61ZM51.71 13.61L55.10 13.61L83.88 86.39L80.50 86.39L51.71 13.61ZM44.90 13.61L48.29 13.61L77.07 86.39L73.64 86.39L44.90 13.61Z%22></path></svg>" />
+  <meta name="description" content="{{ page.description | default: site.description }}" />
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/d3.min.js"></script>
+  <title>Adam Walsh - Car Prices</title>
+</head>
+
+<body>
+  <div class="container my-5">
+    <div>
+      <h1>Adam Walsh</h1>
+      <p>Sed massa turpis, viverra at vestibulum eget, hendrerit tristique sapien. Proin justo leo, feugiat vitae
+        rhoncus malesuada, scelerisque sed nisi. In hac habitasse platea dictumst. Nam erat massa, viverra ut
+        nisi sed, accumsan laoreet justo. Pellentesque id metus et orci facilisis commodo eu a purus. Maecenas
+        euismod risus molestie tristique semper. Nullam congue mauris nibh, non volutpat lacus consequat
+        sagittis. Curabitur dignissim mi neque, quis tempus arcu consequat ac. Nam tincidunt lacus sed lacus
+        vestibulum, eu aliquet nisl tempus. Curabitur malesuada, ante ut congue vestibulum, turpis nisi eleifend
+        libero, sed finibus metus quam nec arcu. Praesent condimentum tellus non elementum efficitur.
+      </p>
+    </div>
+    <hr class="my-4">
+    <!-- <div class="container"> -->
+    <h3 class="mb-3">Car Prices</h3>
+    <div class="row">
+      <div class="col-3">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="mpg" data-bs-toggle="list" href="#list-mpg"
+            role="tab" aria-controls="list-mpg">MPG</a>
+          <a class="list-group-item list-group-item-action" id="dimensions" data-bs-toggle="list"
+            href="#list-dimensions" role="tab" aria-controls="list-dimensions">Dimensions</a>
+          <a class="list-group-item list-group-item-action" id="engine" data-bs-toggle="list" href="#list-engine"
+            role="tab" aria-controls="list-engine">Engine</a>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="tab-content" id="nav-tabContent">
+          <!-- MPG -->
+          <div class="tab-pane fade show active" id="list-mpg" role="tabpanel" aria-labelledby="list-mpg-list">
+            <div class="row">
+              <div class="col">
+                <div id="chart-mpg"></div>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <!-- Dimensions -->
+          <div class="tab-pane fade" id="list-dimensions" role="tabpanel" aria-labelledby="list-dimensions-list">
+            <div class="row">
+              <div class="col-4">
+                <div class="d-flex flex-column bd">
+                  <div>
+                    <h4>Wheelbase</h4>
+                  </div>
+                </div>
+                <div id="chart-dim1"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-dim2"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-dim3"></div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-dim4"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-dim5"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-dim6"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Engine -->
+          <div class="tab-pane fade" id="list-engine" role="tabpanel" aria-labelledby="list-engine-list">
+            <div class="row">
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>HP</h4>
+                </div>
+                <div id="chart-eng1"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-eng2"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-eng3"></div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-eng4"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-eng5"></div>
+              </div>
+              <div class="col-4">
+                <div class="d-flex justify-content-center">
+                  <h4>Price / Car height</h4>
+                </div>
+                <div id="chart-eng6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
