@@ -4,7 +4,7 @@ var formatter = new Intl.NumberFormat('en-US', {
     currency: 'USD'
 });
 
-d3.csv("/data/car_prices-updated.csv").then(function (data) {
+d3.csv("data/car_prices-updated.csv").then(function (data) {
     // Render initial chart
     renderMpgChart(data);
     // Add event listener for list group
