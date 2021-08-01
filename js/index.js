@@ -420,7 +420,7 @@ function renderEngineChart(data) {
     eng2annotations = d3.annotation()
         .annotations([{
             note: {
-                label: "No strong correlated to price.",
+                label: "No strong correlation to price.",
             },
             x: 130,
             y: 160,
@@ -430,7 +430,7 @@ function renderEngineChart(data) {
     eng3annotations = d3.annotation()
         .annotations([{
             note: {
-                label: "No strong correlated to price.",
+                label: "No strong correlation to price.",
             },
             x: 230,
             y: 150,
