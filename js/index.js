@@ -1,9 +1,13 @@
+var mpgTab = new bootstrap.Tab(document.querySelector('#mpg'))
+var dimensionsTab = new bootstrap.Tab(document.querySelector('#dimensions'))
+var engineTab = new bootstrap.Tab(document.querySelector('#engine'))
+
+// Chart dot colors
 colorOne = "#ffc107";
 colorTwo = "#a56eff";
 colorThree = "#fa4d56";
 colorFour = "#3ddbd9";
 colorFive = "#012749";
-
 
 const fuelTypeColor = d3.scaleOrdinal()
     .domain(["gas", "diesel"])
@@ -56,21 +60,24 @@ d3.csv("data/car_prices.csv").then(function (data) {
     renderMpgChart(data);
 
     // Event listener for trait selector
-    document.querySelectorAll('.list-group-item').forEach(el => el.addEventListener('click', event => {
-        switch (event.target.getAttribute("id")) {
-            case 'mpg':
-                writeMpgCharts(data);
-                break;
-            case 'dimensions':
-                writeDimensionCharts(data);
-                break;
-            case 'engine':
-                writeEngineCharts(data);
-                break;
-            default:
-                break;
-        }
-    }));
+    var tabElms = document.querySelectorAll('a[data-bs-toggle="list"]')
+    tabElms.forEach(function (tabElm) {
+        tabElm.addEventListener('shown.bs.tab', function (event) {
+            switch (event.target.getAttribute("id")) {
+                case 'mpg':
+                    writeMpgCharts(data);
+                    break;
+                case 'dimensions':
+                    writeDimensionCharts(data);
+                    break;
+                case 'engine':
+                    writeEngineCharts(data);
+                    break;
+                default:
+                    break;
+            }
+        })
+    });
 
     // Event listener for color
     document.getElementById('colorSelect').addEventListener('change', function () {
@@ -118,68 +125,145 @@ d3.csv("data/car_prices.csv").then(function (data) {
     });
 })
 
+
 function renderMpgChart(data) {
+    mpg1annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Negatively correlated to price.",
+            },
+            x: 200,
+            y: 150,
+            dy: -70,
+            dx: 50
+        }])
+    mpg2annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Negatively correlated to price.",
+            },
+            x: 200,
+            y: 150,
+            dy: -70,
+            dx: 50
+        }])
+
     colorPair = colorMap[document.getElementById("colorSelect").value]
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 500 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
-    svg = d3.select("#chart-mpg1")
+    svg1 = d3.select("#chart-mpg1")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-    x = d3.scaleLinear()
+    x1 = d3.scaleLinear()
         .domain([10, 55])
         .range([0, width]);
-    svg.append("g")
+    svg1.append("g")
         .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(x))
-    y = d3.scaleLinear()
+        .call(d3.axisBottom(x1))
+    y1 = d3.scaleLinear()
         .domain([0, 50000])
         .range([height, 0]);
-    svg.append("g")
-        .call(d3.axisLeft(y));
-    svg.append('g')
+    svg1.append("g")
+        .call(d3.axisLeft(y1));
+    svg1.append('g')
         .selectAll("dot")
         .data(data)
         .join("circle")
-        .attr("cx", function (d) { return x(d.citympg); })
-        .attr("cy", function (d) { return y(d.price); })
+        .attr("cx", function (d) { return x1(d.citympg); })
+        .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg1.append("g").call(mpg1annotations)
 
-    svg = d3.select("#chart-mpg2")
+
+
+    svg2 = d3.select("#chart-mpg2")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-    x = d3.scaleLinear()
+    x2 = d3.scaleLinear()
         .domain([10, 55])
         .range([0, width]);
-    svg.append("g")
+    svg2.append("g")
         .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(x))
-    y = d3.scaleLinear()
+        .call(d3.axisBottom(x2))
+    y2 = d3.scaleLinear()
         .domain([0, 50000])
         .range([height, 0]);
-    svg.append("g")
-        .call(d3.axisLeft(y));
-    svg.append('g')
+    svg2.append("g")
+        .call(d3.axisLeft(y2));
+    svg2.append('g')
         .selectAll("dot")
         .data(data)
         .join("circle")
-        .attr("cx", function (d) { return x(d.highwaympg); })
-        .attr("cy", function (d) { return y(d.price); })
+        .attr("cx", function (d) { return x2(d.highwaympg); })
+        .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg2.append("g").call(mpg2annotations)
 }
 
 
 
 function renderDimensionChart(data) {
+    dim1annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 150,
+            y: 100,
+            dy: -30,
+            dx: -50
+        }])
+    dim2annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 150,
+            y: 100,
+            dy: -30,
+            dx: -50
+        }])
+    dim3annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 150,
+            y: 100,
+            dy: -30,
+            dx: -50
+        }])
+    dim4annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "No strong correlation to price.",
+            },
+            x: 150,
+            y: 100,
+            dy: -30,
+            dx: -50
+        }])
+    dim5annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 150,
+            y: 100,
+            dy: -30,
+            dx: -50
+        }])
+
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 350 - margin.left - margin.right,
         height = 225 - margin.top - margin.bottom;
@@ -191,7 +275,7 @@ function renderDimensionChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x1 = d3.scaleLinear()
-        .domain([80, 125])
+        .domain([60, 125])
         .range([0, width]);
     svg1.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -209,6 +293,7 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg1.append("g").call(dim1annotations)
 
     svg2 = d3.select("#chart-dim2")
         .append("svg")
@@ -235,6 +320,7 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg2.append("g").call(dim2annotations)
 
     svg3 = d3.select("#chart-dim3")
         .append("svg")
@@ -243,7 +329,7 @@ function renderDimensionChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x3 = d3.scaleLinear()
-        .domain([58, 76])
+        .domain([50, 75])
         .range([0, width]);
     svg3.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -261,6 +347,7 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg3.append("g").call(dim3annotations)
 
     svg4 = d3.select("#chart-dim4")
         .append("svg")
@@ -269,7 +356,7 @@ function renderDimensionChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     x4 = d3.scaleLinear()
-        .domain([45, 62])
+        .domain([38, 62])
         .range([0, width]);
     svg4.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -287,6 +374,7 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg4.append("g").call(dim4annotations)
 
     svg5 = d3.select("#chart-dim5")
         .append("svg")
@@ -313,10 +401,52 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y5(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg5.append("g").call(dim5annotations)
+
 }
 
 
 function renderEngineChart(data) {
+    eng1annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 165,
+            y: 150,
+            dy: 40,
+            dx: 90
+        }])
+    eng2annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "No strong correlated to price.",
+            },
+            x: 130,
+            y: 160,
+            dy: -90,
+            dx: 90
+        }])
+    eng3annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "No strong correlated to price.",
+            },
+            x: 230,
+            y: 150,
+            dy: -45,
+            dx: -90
+        }])
+    eng4annotations = d3.annotation()
+        .annotations([{
+            note: {
+                label: "Positively correlated to price.",
+            },
+            x: 165,
+            y: 150,
+            dy: 20,
+            dx: 90
+        }])
     margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 500 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -346,6 +476,7 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg1.append("g").call(eng1annotations)
 
     svg2 = d3.select("#chart-eng2")
         .append("svg")
@@ -372,6 +503,7 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg2.append("g").call(eng2annotations)
 
     svg3 = d3.select("#chart-eng3")
         .append("svg")
@@ -398,6 +530,7 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg3.append("g").call(eng3annotations)
 
     svg4 = d3.select("#chart-eng4")
         .append("svg")
@@ -424,41 +557,6 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+    svg4.append("g").call(eng4annotations)
 
 }
-
-// tooltip = d3.select("#chart-mpg")
-// .append("div")
-// .style("opacity", 0)
-// .attr("class", "tooltip")
-// .style("background-color", "white")
-// .style("border", "solid")
-// .style("border-width", "1px")
-// .style("border-radius", "5px")
-// .style("padding", "10px")
-
-// mouseover = function (event, d) { tooltip.style("opacity", 1) }
-// mousemove = function (event, d) {
-//     tooltip
-//         .html(`The exact value of<br>the Ground Living area is: ${d.price}`)
-//         .style("left", (event.pageX + 10) + "px")
-//         .style("top", (event.pageY - 50) + "px")
-// }
-// mouseleave = function (event, d) {
-//     tooltip
-//         .transition()
-//         .duration(500)
-//         .style("opacity", 0)
-// }
-
-// svg.append('g')
-//     .selectAll("dot")
-//     .data(data)
-//     .join("circle")
-//     .attr("cx", function (d) { return x(d.citympg); })
-//     .attr("cy", function (d) { return y(d.price); })
-//     .attr("r", 4)
-//     .style("fill", "#69b3a2")
-//     .on("mouseover", mouseover)
-//     .on("mousemove", mousemove)
-//     .on("mouseleave", mouseleave)

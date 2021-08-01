@@ -9,24 +9,33 @@
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23000000%22></rect><path fill=%22%23fff%22 d=%22M56.72 65.03L43.36 65.03L44.64 61.87L55.45 61.87L56.72 65.03ZM59.27 71.36L40.90 71.36L42.13 68.19L57.91 68.19L59.27 71.36ZM61.73 77.69L38.44 77.69L39.67 74.52L60.42 74.52L61.73 77.69ZM39.80 17.88L12.73 86.39L9.31 86.39L38.09 13.61L41.52 13.61L70.26 86.39L66.88 86.39L39.80 17.88ZM16.12 86.39L40.20 25.39L42.00 29.43L19.50 86.39L16.12 86.39ZM22.93 86.39L43.72 33.74L45.39 38.09L26.36 86.39L22.93 86.39ZM29.74 86.39L47.06 42.44L48.73 46.88L33.13 86.39L29.74 86.39ZM61.91 13.61L90.69 86.39L87.27 86.39L58.53 13.61L61.91 13.61ZM51.71 13.61L55.10 13.61L83.88 86.39L80.50 86.39L51.71 13.61ZM44.90 13.61L48.29 13.61L77.07 86.39L73.64 86.39L44.90 13.61Z%22></path></svg>" />
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <script src="js/d3.min.js"></script>
   <title>Adam Walsh - Car Prices</title>
+  <script src="js/d3.min.js"></script>
+  <script src="js/d3-annotation.min.js"></script>
 </head>
 
 <body>
   <div class="container my-5">
     <div>
       <h2>How do vehicle characteristics influence sale price?</h2>
-      <p>
-        This data visualization attempts to chart the relationship between difference vehicle characteristics and the
-        sale price of the vehicle.
+      <span class="small mb-5">Adam Walsh <a href="mailto:adam@atw.me">adam@atw.me</a></span>
+      <p class="mt-4">
+        This data visualization attempts to chart the correlation between different vehicle characteristics and the
+        vehicle's sale price.
       </p>
       <p>
-        The charts are grouped by characteristic types, including types related to MPG, types
-        related to the physical dimensions of the vehicle, and types related to engine specification. The visualization
-        also allows for color-coding of the charts by certain non-numeric vehicle characteristic, including fuel type,
-        engine aspiration, door count, body style, and engine location.
+        The charts are grouped by characteristic types, including types related to MPG, types associated with the
+        physical dimensions of the vehicle, and types related to engine specification. The visualization also allows for
+        color-coding of the charts by particular non-numeric vehicle characteristics, including fuel type, engine
+        aspiration, door count, body style, and engine location.
       </p>
+      <h4>How to use this visualization:</h4>
+      <ul>
+        <li>Step through the vehicle traits on the left column.</li>
+        <li>Optionally choose a non-numeric vehicle attribute to color the points on the scatter plots; defaulted to
+          fuel
+          type.</li>
+      </ul>
     </div>
     <hr class="my-4">
     <!-- <div class="container"> -->
@@ -42,7 +51,7 @@
             role="tab" aria-controls="list-engine">Engine</a>
         </div>
         <div class="mt-5">
-          <h5>Color data by...</h5>
+          <h6>Color data by...</h6>
           <select class="form-select" id="colorSelect">
             <option selected value="fuelType">Fuel type</option>
             <option value="aspiration">Aspiration</option>
@@ -56,10 +65,14 @@
           <div><span class="badge rounded-pill" style="background-color: #a56eff;">Diesel</span></div>
         </div>
       </div>
-      <div class="col-10 mt-5">
+      <div class="col-10">
         <div class="tab-content" id="nav-tabContent">
           <!-- MPG -->
           <div class="tab-pane fade show active" id="list-mpg" role="tabpanel" aria-labelledby="list-mpg-list">
+            <div class="d-flex justify-content-end mt-2 mb-5">
+              <button type="button" class="btn btn-outline-primary" onclick="dimensionsTab.show();">Dimensions
+                →</button>
+            </div>
             <div class="row">
               <div class="col">
                 <div class="d-flex justify-content-center">
@@ -77,6 +90,12 @@
           </div>
           <!-- Dimensions -->
           <div class="tab-pane fade" id="list-dimensions" role="tabpanel" aria-labelledby="list-dimensions-list">
+            <div class="d-flex justify-content-end mt-2 mb-5">
+              <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-outline-primary" onclick="mpgTab.show();">← MPG</button>
+                <button type="button" class="btn btn-outline-primary" onclick="engineTab.show();">Engine →</button>
+              </div>
+            </div>
             <div class="row">
               <div class="col-4">
                 <div class="d-flex justify-content-center">
@@ -115,6 +134,10 @@
           </div>
           <!-- Engine -->
           <div class="tab-pane fade" id="list-engine" role="tabpanel" aria-labelledby="list-engine-list">
+            <div class="d-flex justify-content-end mt-2 mb-5">
+              <button type="button" class="btn btn-outline-primary" onclick="dimensionsTab.show();">←
+                Dimensions</button>
+            </div>
             <div class="row">
               <div class="col">
                 <div class="d-flex justify-content-center">
