@@ -127,6 +127,39 @@ d3.csv("data/car_prices.csv").then(function (data) {
 
 
 function renderMpgChart(data) {
+    mpg1tooltip = d3.select("#chart-mpg1")
+        .append("div")
+        .attr("class", "tooltip")
+    mpg1tooltipmouseover = function (event, d) { mpg1tooltip.style("opacity", .65) }
+    mpg1tooltipmousemove = function (event, d) {
+        mpg1tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    mpg1tooltipmouseleave = function (event, d) {
+        mpg1tooltip
+            .transition()
+            .duration(500)
+        mpg1tooltip.style("opacity", 0)
+    };
+    mpg2tooltip = d3.select("#chart-mpg2")
+        .append("div")
+        .attr("class", "tooltip")
+    mpg2tooltipmouseover = function (event, d) { mpg2tooltip.style("opacity", .65) }
+    mpg2tooltipmousemove = function (event, d) {
+        mpg2tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    mpg2tooltipmouseleave = function (event, d) {
+        mpg2tooltip
+            .transition()
+            .duration(500)
+        mpg2tooltip.style("opacity", 0)
+    };
+
     mpg1annotations = d3.annotation()
         .annotations([{
             note: {
@@ -178,6 +211,9 @@ function renderMpgChart(data) {
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", mpg1tooltipmouseover)
+        .on("mousemove", mpg1tooltipmousemove)
+        .on("mouseleave", mpg1tooltipmouseleave)
     svg1.append("g").call(mpg1annotations)
 
 
@@ -207,12 +243,97 @@ function renderMpgChart(data) {
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", mpg2tooltipmouseover)
+        .on("mousemove", mpg2tooltipmousemove)
+        .on("mouseleave", mpg2tooltipmouseleave)
     svg2.append("g").call(mpg2annotations)
 }
 
 
 
 function renderDimensionChart(data) {
+    dim1tooltip = d3.select("#chart-dim1")
+        .append("div")
+        .attr("class", "tooltip")
+    dim1tooltipmouseover = function (event, d) { dim1tooltip.style("opacity", .65) }
+    dim1tooltipmousemove = function (event, d) {
+        dim1tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    dim1tooltipmouseleave = function (event, d) {
+        dim1tooltip
+            .transition()
+            .duration(500)
+        dim1tooltip.style("opacity", 0)
+    };
+    dim2tooltip = d3.select("#chart-dim2")
+        .append("div")
+        .attr("class", "tooltip")
+    dim2tooltipmouseover = function (event, d) { dim2tooltip.style("opacity", .65) }
+    dim2tooltipmousemove = function (event, d) {
+        dim2tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    dim2tooltipmouseleave = function (event, d) {
+        dim2tooltip
+            .transition()
+            .duration(500)
+        dim2tooltip.style("opacity", 0)
+    };
+    dim3tooltip = d3.select("#chart-dim3")
+        .append("div")
+        .attr("class", "tooltip")
+    dim3tooltipmouseover = function (event, d) { dim3tooltip.style("opacity", .65) }
+    dim3tooltipmousemove = function (event, d) {
+        dim3tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    dim3tooltipmouseleave = function (event, d) {
+        dim3tooltip
+            .transition()
+            .duration(500)
+        dim3tooltip.style("opacity", 0)
+    };
+    dim4tooltip = d3.select("#chart-dim4")
+        .append("div")
+        .attr("class", "tooltip")
+    dim4tooltipmouseover = function (event, d) { dim4tooltip.style("opacity", .65) }
+    dim4tooltipmousemove = function (event, d) {
+        dim4tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    dim4tooltipmouseleave = function (event, d) {
+        dim4tooltip
+            .transition()
+            .duration(500)
+        dim4tooltip.style("opacity", 0)
+    };
+    dim5tooltip = d3.select("#chart-dim5")
+        .append("div")
+        .attr("class", "tooltip")
+    dim5tooltipmouseover = function (event, d) { dim5tooltip.style("opacity", .65) }
+    dim5tooltipmousemove = function (event, d) {
+        dim5tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    dim5tooltipmouseleave = function (event, d) {
+        dim5tooltip
+            .transition()
+            .duration(500)
+        dim5tooltip.style("opacity", 0)
+    };
+
+
     dim1annotations = d3.annotation()
         .annotations([{
             note: {
@@ -293,6 +414,9 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", dim1tooltipmouseover)
+        .on("mousemove", dim1tooltipmousemove)
+        .on("mouseleave", dim1tooltipmouseleave)
     svg1.append("g").call(dim1annotations)
 
     svg2 = d3.select("#chart-dim2")
@@ -320,6 +444,9 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", dim2tooltipmouseover)
+        .on("mousemove", dim2tooltipmousemove)
+        .on("mouseleave", dim2tooltipmouseleave)
     svg2.append("g").call(dim2annotations)
 
     svg3 = d3.select("#chart-dim3")
@@ -347,6 +474,9 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", dim3tooltipmouseover)
+        .on("mousemove", dim3tooltipmousemove)
+        .on("mouseleave", dim3tooltipmouseleave)
     svg3.append("g").call(dim3annotations)
 
     svg4 = d3.select("#chart-dim4")
@@ -374,6 +504,9 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", dim4tooltipmouseover)
+        .on("mousemove", dim4tooltipmousemove)
+        .on("mouseleave", dim4tooltipmouseleave)
     svg4.append("g").call(dim4annotations)
 
     svg5 = d3.select("#chart-dim5")
@@ -401,12 +534,80 @@ function renderDimensionChart(data) {
         .attr("cy", function (d) { return y5(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", dim5tooltipmouseover)
+        .on("mousemove", dim5tooltipmousemove)
+        .on("mouseleave", dim5tooltipmouseleave)
     svg5.append("g").call(dim5annotations)
 
 }
 
 
 function renderEngineChart(data) {
+    eng1tooltip = d3.select("#chart-eng1")
+        .append("div")
+        .attr("class", "tooltip")
+    eng1tooltipmouseover = function (event, d) { eng1tooltip.style("opacity", .65) }
+    eng1tooltipmousemove = function (event, d) {
+        eng1tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    eng1tooltipmouseleave = function (event, d) {
+        eng1tooltip
+            .transition()
+            .duration(500)
+        eng1tooltip.style("opacity", 0)
+    };
+    eng2tooltip = d3.select("#chart-eng2")
+        .append("div")
+        .attr("class", "tooltip")
+    eng2tooltipmouseover = function (event, d) { eng2tooltip.style("opacity", .65) }
+    eng2tooltipmousemove = function (event, d) {
+        eng2tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    eng2tooltipmouseleave = function (event, d) {
+        eng2tooltip
+            .transition()
+            .duration(500)
+        eng2tooltip.style("opacity", 0)
+    };
+    eng3tooltip = d3.select("#chart-eng3")
+        .append("div")
+        .attr("class", "tooltip")
+    eng3tooltipmouseover = function (event, d) { eng3tooltip.style("opacity", .65) }
+    eng3tooltipmousemove = function (event, d) {
+        eng3tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    eng3tooltipmouseleave = function (event, d) {
+        eng3tooltip
+            .transition()
+            .duration(500)
+        eng3tooltip.style("opacity", 0)
+    };
+    eng4tooltip = d3.select("#chart-eng4")
+        .append("div")
+        .attr("class", "tooltip")
+    eng4tooltipmouseover = function (event, d) { eng4tooltip.style("opacity", .65) }
+    eng4tooltipmousemove = function (event, d) {
+        eng4tooltip
+            .html(d.CarName)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 50) + "px")
+    }
+    eng4tooltipmouseleave = function (event, d) {
+        eng4tooltip
+            .transition()
+            .duration(500)
+        eng4tooltip.style("opacity", 0)
+    };
+
     eng1annotations = d3.annotation()
         .annotations([{
             note: {
@@ -476,6 +677,9 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y1(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", eng1tooltipmouseover)
+        .on("mousemove", eng1tooltipmousemove)
+        .on("mouseleave", eng1tooltipmouseleave)
     svg1.append("g").call(eng1annotations)
 
     svg2 = d3.select("#chart-eng2")
@@ -503,6 +707,9 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y2(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", eng2tooltipmouseover)
+        .on("mousemove", eng2tooltipmousemove)
+        .on("mouseleave", eng2tooltipmouseleave)
     svg2.append("g").call(eng2annotations)
 
     svg3 = d3.select("#chart-eng3")
@@ -530,6 +737,9 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y3(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", eng3tooltipmouseover)
+        .on("mousemove", eng3tooltipmousemove)
+        .on("mouseleave", eng3tooltipmouseleave)
     svg3.append("g").call(eng3annotations)
 
     svg4 = d3.select("#chart-eng4")
@@ -557,6 +767,9 @@ function renderEngineChart(data) {
         .attr("cy", function (d) { return y4(d.price); })
         .attr("r", 4)
         .style("fill", function name(d) { return colorPair[0](d[colorPair[1]]) })
+        .on("mouseover", eng4tooltipmouseover)
+        .on("mousemove", eng4tooltipmousemove)
+        .on("mouseleave", eng4tooltipmouseleave)
     svg4.append("g").call(eng4annotations)
 
 }
